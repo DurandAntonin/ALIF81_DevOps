@@ -1,12 +1,20 @@
-FROM python:3.14-alpine
+# 1. Build
+FROM python:3.14-alpine as builder
 
 WORKDIR /app
 
-COPY ./src/requirements.txt .
-COPY ./src/server.py .
+COPY ./requirements.txt .
 
 RUN apk add --no-cache --update
-RUN python -m pip install -r requirements.txt
+RUN python -m pip install --no-cache-dir --prefix=/app_libs -r requirements.txt
+
+# 2. Run
+FROM python:3.14-alpine as runner
+
+WORKDIR /app
+
+COPY --from=builder /app_libs /usr/local
+COPY ./src .
 
 EXPOSE 8000
 

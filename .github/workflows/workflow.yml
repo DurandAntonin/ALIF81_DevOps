@@ -1,0 +1,30 @@
+name: CI - Services Integration Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  build:
+    runs-on: alpine-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.14
+        uses: actions/setup-python@v4
+        with:
+            python-version: '3.14' 
+
+      - name: Build Docker images
+        run: |
+          docker build -t py3.14-fastapi:latest -f HelloWorldService/Dockerfile .
