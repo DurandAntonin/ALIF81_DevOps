@@ -27,5 +27,5 @@ jobs:
 
       - name: Build Docker images
         run: |
-          cd /HelloWorldService
+          cd HelloWorldService
           docker build -t py3.14-fastapi:latest -f HelloWorldService/Dockerfile .
