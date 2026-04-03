@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: alpine-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
