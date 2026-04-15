@@ -12,13 +12,24 @@ permissions:
   actions: read
 
 jobs:
-  build:
+  build-and-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+    
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.14' 
+
+      - name: Run Tests with Coverage
+        run: |
+          cd ./HelloWorldService
+          pip install -r requirements.txt
+          python -m pytest tests/service_tests.py
 
       - name: Build Docker images
         run: |
