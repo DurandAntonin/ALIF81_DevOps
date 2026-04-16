@@ -1,6 +1,6 @@
 import pytest
 
-from src.service import add, mult, reduce, divide
+from src.services.calculatrice_service import add, mult, reduce, divide
 
 
 class TestService:
