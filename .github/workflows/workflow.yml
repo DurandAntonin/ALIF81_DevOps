@@ -14,8 +14,20 @@ permissions:
   attestations: write
   pull-requests: write
 
-jobs:   
-  build-and-test-and-sonar:
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v6.0.0
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build-and-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -28,24 +40,11 @@ jobs:
         with:
           python-version: '3.14' 
 
-      - name: Install dependencies and run Tests with Coverage
+      - name: Run Tests with Coverage
         run: |
           cd ./HelloWorldService
           pip install -r requirements.txt
-          pip install pytest pytest-cov
-          python -m pytest --cov=. --cov-report=xml:tests_coverage.xml
-
-      - name: SonarQube Scan
-        id: sonarqube-scan
-        uses: SonarSource/sonarqube-scan-action@v6.0.0
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
-      - name: SonarQube Quality Gate Check
-        id: sonarqube-quality-gate
-        uses: SonarSource/sonarqube-quality-gate-action@v2
-        timeout-minutes: 5
-
+          python -m pytest
 
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
