@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=builder /app_libs /usr/local
 COPY ./src src
 
-WORKDIR /src
+WORKDIR /app/src
 
 EXPOSE 8000
 
