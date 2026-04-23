@@ -18,7 +18,6 @@ def get_characters() -> list[Character]:
 @route.get(
     "/all",
     status_code=status.HTTP_200_OK,
-    response_model=list[Character],
 )
 def get_all(data: Annotated[list[Character], Depends(get_characters)]) -> list[Character]:
     return characters_service.get_all_characters(
@@ -28,7 +27,6 @@ def get_all(data: Annotated[list[Character], Depends(get_characters)]) -> list[C
 @route.get(
     "/{id_character}",
     status_code=status.HTTP_200_OK,
-    response_model=Character,
 )
 def get_by_id(
     id_character: int,

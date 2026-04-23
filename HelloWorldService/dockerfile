@@ -1,5 +1,5 @@
 # 1. Build
-FROM python:3.14-alpine as builder
+FROM python:3.14-alpine AS builder
 
 WORKDIR /app
 
@@ -9,14 +9,14 @@ RUN apk add --no-cache --update
 RUN python -m pip install --no-cache-dir --prefix=/app_libs -r requirements.txt
 
 # 2. Run
-FROM python:3.14-alpine as runner
+FROM python:3.14-alpine AS runner
 
 WORKDIR /app
 
 COPY --from=builder /app_libs /usr/local
 COPY ./src src
 
-WORKDIR src
+WORKDIR /src
 
 EXPOSE 8000
 
