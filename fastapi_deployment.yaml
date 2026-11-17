@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-cours
+spec:
+  selector: # Elle indique au Deployment quels Pods il doit surveiller et gérer.
+    matchLabels:
+      app: fastapi
+  replicas: 2
+  template: # meta-données de l'application à déployer
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi
+        image: antonind5/py3.14-fastapi:latest
+        ports:
+        - containerPort: 8000 # Port de l'app à exposer
