@@ -43,3 +43,6 @@ kubectl apply -f service.yaml
 kubectl apply -f loadbalencer_service.yaml
 minikube service loadbalancer
 ```
+
+# un noeud ==> une machine physique ou virtuelle
+# pod ==> processus linux qui exécute un conteneur, plus petite unité dans docker
